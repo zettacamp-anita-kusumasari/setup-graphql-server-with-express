@@ -1,0 +1,20 @@
+{
+  "name": "setup-graphql-server-with-express",
+  "version": "1.0.0",
+  "description": "Implement the foundational GraphQL server by setting up Apollo Server and integrating it with your existing Express.js application. This task also includes defining the GraphQL type definitions (typeDefs) for your User, Student, and School models, mirroring their Mongoose schemas, which are a prerequisite for the server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zettacamp-anita-kusumasari/setup-graphql-server-with-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zettacamp-anita-kusumasari/setup-graphql-server-with-express/issues"
+  },
+  "homepage": "https://github.com/zettacamp-anita-kusumasari/setup-graphql-server-with-express#readme"
+}
