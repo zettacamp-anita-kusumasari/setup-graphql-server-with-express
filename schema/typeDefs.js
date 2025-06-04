@@ -1,54 +1,106 @@
-type Student {
-  id: ID!
-  name: String!
-  email: String!
-  school: School
-}
+const { gql } = require('apollo-server-express');
 
-input CreateStudentInput {
-  name: String!
-  email: String!
-  schoolId: ID!
-}
+module.exports = gql`
+  scalar Date
 
-input UpdateStudentInput {
-  id: ID!
-  name: String
-  email: String
-  schoolId: ID
-}
+  # === TYPES ===
+  type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    role: String!
+    deletedAt: Date
+  }
 
-type School {
-  id: ID!
-  name: String!
-  address: String!
-  students: [Student!]!
-}
+  type Student {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    email: String!
+    dateOfBirth: Date
+    school: School
+    deletedAt: Date
+  }
 
-input CreateSchoolInput {
-  name: String!
-  address: String!
-}
+  type School {
+    id: ID!
+    name: String!
+    address: String
+    students: [Student]
+    deletedAt: Date
+  }
 
-input UpdateSchoolInput {
-  id: ID!
-  name: String
-  address: String
-}
+  # === INPUT TYPES ===
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    role: String!
+  }
 
-extend type Query {
-  getAllStudents: [Student!]!
-  getStudentById(id: ID!): Student
-  getAllSchools: [School!]!
-  getSchoolById(id: ID!): School
-}
+  input UpdateUserInput {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    role: String
+  }
 
-extend type Mutation {
-  createStudent(input: CreateStudentInput!): Student!
-  updateStudent(input: UpdateStudentInput!): Student!
-  deleteStudent(id: ID!): Boolean!
+  input CreateStudentInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    dateOfBirth: Date
+    schoolId: ID!
+  }
 
-  createSchool(input: CreateSchoolInput!): School!
-  updateSchool(input: UpdateSchoolInput!): School!
-  deleteSchool(id: ID!): Boolean!
-}
+  input UpdateStudentInput {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    dateOfBirth: Date
+    schoolId: ID
+  }
+
+  input CreateSchoolInput {
+    name: String!
+    address: String
+  }
+
+  input UpdateSchoolInput {
+    id: ID!
+    name: String
+    address: String
+  }
+
+  # === QUERIES ===
+  type Query {
+    getAllUsers: [User]
+    getOneUser(id: ID!): User
+
+    getAllStudents: [Student]
+    getOneStudent(id: ID!): Student
+
+    getAllSchools: [School]
+    getOneSchool(id: ID!): School
+  }
+
+  # === MUTATIONS ===
+  type Mutation {
+    createUser(input: CreateUserInput!): User
+    updateUser(input: UpdateUserInput!): User
+    deleteUser(id: ID!): User
+
+    createStudent(input: CreateStudentInput!): Student
+    updateStudent(input: UpdateStudentInput!): Student
+    deleteStudent(id: ID!): Student
+
+    createSchool(input: CreateSchoolInput!): School
+    updateSchool(input: UpdateSchoolInput!): School
+    deleteSchool(id: ID!): School
+  }
+`;
