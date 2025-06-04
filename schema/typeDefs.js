@@ -3,6 +3,7 @@ const { gql } = require('apollo-server-express');
 module.exports = gql`
   scalar Date
 
+  # === TYPES ===
   type User {
     id: ID!
     firstName: String!
@@ -18,7 +19,7 @@ module.exports = gql`
     lastName: String!
     email: String!
     dateOfBirth: Date
-    schoolId: ID!
+    school: School
     deletedAt: Date
   }
 
@@ -30,26 +31,76 @@ module.exports = gql`
     deletedAt: Date
   }
 
-  type Query {
-    users: [User]
-    user(id: ID!): User
-    students: [Student]
-    student(id: ID!): Student
-    schools: [School]
-    school(id: ID!): School
+  # === INPUT TYPES ===
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String!
+    role: String!
   }
 
+  input UpdateUserInput {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+    role: String
+  }
+
+  input CreateStudentInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    dateOfBirth: Date
+    schoolId: ID!
+  }
+
+  input UpdateStudentInput {
+    id: ID!
+    firstName: String
+    lastName: String
+    email: String
+    dateOfBirth: Date
+    schoolId: ID
+  }
+
+  input CreateSchoolInput {
+    name: String!
+    address: String
+  }
+
+  input UpdateSchoolInput {
+    id: ID!
+    name: String
+    address: String
+  }
+
+  # === QUERIES ===
+  type Query {
+    getAllUsers: [User]
+    getOneUser(id: ID!): User
+
+    getAllStudents: [Student]
+    getOneStudent(id: ID!): Student
+
+    getAllSchools: [School]
+    getOneSchool(id: ID!): School
+  }
+
+  # === MUTATIONS ===
   type Mutation {
-    createUser(firstName: String!, lastName: String!, email: String!, password: String!, role: String!): User
-    updateUser(id: ID!, firstName: String, lastName: String, email: String, role: String, password: String): User
+    createUser(input: CreateUserInput!): User
+    updateUser(input: UpdateUserInput!): User
     deleteUser(id: ID!): User
 
-    createStudent(firstName: String!, lastName: String!, email: String!, dateOfBirth: Date, schoolId: ID!): Student
-    updateStudent(id: ID!, firstName: String, lastName: String, email: String, dateOfBirth: Date, schoolId: ID): Student
+    createStudent(input: CreateStudentInput!): Student
+    updateStudent(input: UpdateStudentInput!): Student
     deleteStudent(id: ID!): Student
 
-    createSchool(name: String!, address: String): School
-    updateSchool(id: ID!, name: String, address: String): School
+    createSchool(input: CreateSchoolInput!): School
+    updateSchool(input: UpdateSchoolInput!): School
     deleteSchool(id: ID!): School
   }
 `;
