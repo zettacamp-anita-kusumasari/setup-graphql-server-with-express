@@ -1,4 +1,4 @@
-// *************** IMPORT MONGOOSELIBRARY *************** 
+// *************** IMPORT MONGOOSE *************** 
 const mongoose = require('mongoose');
 
 // *************** START: Description of the section ***************
